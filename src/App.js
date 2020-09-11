@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import Converter from './components/Converter'
+import { fetchListMoney } from './redux/actions/listMoney'
+import useHttp from './hooks/http.hook'
 
 function App() {
+  const { request } = useHttp()
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(fetchListMoney(request))
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Converter />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
