@@ -6,29 +6,40 @@ import useHttp from '../hooks/http.hook'
 function Ticket({ ticket, setInput, type, setList }) {
   const { request } = useHttp()
   const dispatch = useDispatch()
+
   const setName = async e => {
-    const key = type === 'left' ? 'tickerLeft' : 'tickerRight'
     const value = e.target.innerText
-
-    setInput(prev => ({
-      ...prev,
-      [key]: value,
-    }))
-
-    if (type === 'left') {
-      const min = await minConvert(request, value)
-      setInput(prev => {
-        console.log(prev)
-        return {
-          ...prev,
-          valueLeft: min.minAmount,
-        }
-      })
-    }
+    const key = type === 'from' ? 'tickerFrom' : 'tickerTo'
 
     dispatch(setConvertData(key, value))
-
     setList(false)
+
+    const converter = window.store.getState().converter
+
+    if (converter?.tickerTo === converter?.tickerFrom) {
+      setList(false)
+      return alert('Валюты должны быть разные!')
+    }
+
+    setInput(prev => {
+      return {
+        ...prev,
+        [key]: value,
+      }
+    })
+
+    if (converter?.tickerFrom && converter?.tickerTo) {
+      const min = await minConvert(
+        request,
+        converter?.tickerFrom,
+        converter?.tickerTo
+      )
+
+      dispatch(setConvertData('minConvert', min.minAmount))
+      if (!converter?.valueFrom) {
+        dispatch(setConvertData('valueFrom', min.minAmount))
+      }
+    }
   }
 
   return (
@@ -37,5 +48,4 @@ function Ticket({ ticket, setInput, type, setList }) {
     </div>
   )
 }
-
 export default Ticket

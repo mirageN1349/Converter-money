@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 *,
 *:after,
 *:before {
@@ -9,15 +11,15 @@ body {
 }
 
 .container {
-  max-width: 1400px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 
 .converter {
   width: 940px;
   height: 314px;
-  margin-top: 25%;
   display: flex;
   background: #fff;
   padding: 76px 60px;
@@ -28,7 +30,7 @@ body {
     right: 0;
     top: 100%;
     z-index: 1;
-    height: 500px;
+    height: 149px;
     overflow: hidden;
     overflow-y: auto;
   }
@@ -38,12 +40,14 @@ body {
     align-items: center;
     justify-content: center;
     border: 1px solid rgb(206, 205, 205);
+    border-left: none;
+    border-right: none;
     border-top: none;
     width: 170px;
     height: 50px;
     font-size: 20px;
     color: #626262;
-    font-family: 'Roboto';
+    font-family: 'Raleway', sans-serif;
     cursor: pointer;
   }
   &-blocks {
@@ -62,6 +66,7 @@ body {
     background: #f5f5f5;
     padding: 10px 0;
     input {
+      font-family: 'DM Sans', sans-serif;
       font-size: 20px;
       border: none;
       outline: none;
@@ -71,6 +76,8 @@ body {
       &:nth-child(2n) {
         border: none;
         text-align: center;
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
       }
     }
 
@@ -99,6 +106,21 @@ body {
       padding-left: 15px;
       font-size: 16px;
       color: #737373;
+    }
+  }
+}
+
+.button-convert {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  svg {
+    fill: rgb(145, 145, 145);
+  }
+  &:hover {
+    svg {
+      fill: #000;
     }
   }
 }

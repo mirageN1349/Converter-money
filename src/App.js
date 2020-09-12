@@ -7,7 +7,6 @@ import useHttp from './hooks/http.hook'
 function App() {
   const { request } = useHttp()
   const dispatch = useDispatch()
-
   React.useEffect(() => {
     dispatch(fetchListMoney(request))
   })

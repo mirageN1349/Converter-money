@@ -1,6 +1,6 @@
 import config from '../config/config.json'
 
-export const converter = async (from, to, sum, request) => {
+export const converter = async (from, to = 'BNBMAINNET', sum, request) => {
   const data = await request(
     `https://changenow.io/api/v1/exchange-amount/${sum}/${from}_${to}/?api_key=${config.api_key}`
   )

@@ -3,28 +3,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setConvertData } from '../redux/actions/converter'
 import Ticket from './Ticket'
 
-function Input({ type }) {
+function InputToInner() {
   const dispatch = useDispatch()
 
   const [list, setList] = React.useState(false)
   const [input, setInput] = React.useState({
-    valueLeft: '',
-    valueRight: '',
-    tickerLeft: '',
-    tickerRight: '',
+    valueTo: '',
+    tickerTo: '',
   })
 
-  const listMoney = useSelector(({ listMoney }) => listMoney.listMoney)
+  const { listMoney, result } = useSelector(({ listMoney, converter }) => ({
+    listMoney: listMoney.listMoney,
+    result: converter.result,
+  }))
 
-  const result = useSelector(state => state.converter.result)
   const renderList = e => {
     e.persist()
-    if (e.target.name === 'tickerLeft' || e.target.name === 'tickerRight') {
+    if (e.target.name === 'tickerTo') {
       e.target.value ? setList(true) : setList(false)
     }
+
+    dispatch(setConvertData(e.target.name, e.target.value))
+
     setInput(prev => {
-      console.log(e.target.name, e.target.value)
-      dispatch(setConvertData(e.target.name, e.target.value))
       return {
         ...prev,
         [e.target.name]: e.target.value,
@@ -35,21 +36,22 @@ function Input({ type }) {
   return (
     <div className="converter-block">
       <input
-        name={type === 'left' ? 'valueLeft' : 'valueRight'}
+        name="valueTo"
         onChange={renderList}
-        value={type === 'right' ? result : input.valueLeft}
+        value={result}
         placeholder="0"
         type="text"
+        disabled
       />
       <input
-        placeholder={type === 'left' ? 'BTC' : 'BNBMAINNET'}
-        value={type === 'left' ? input.tickerLeft : input.tickerRight}
+        placeholder={'BNBMAINNET'}
+        value={input.tickerTo}
         onChange={renderList}
         onClick={() => {
           setList(!list)
         }}
         type="text"
-        name={type === 'left' ? 'tickerLeft' : 'tickerRight'}
+        name="tickerTo"
       />
 
       <div className={list ? 'converter-list' : 'converter-list none'}>
@@ -58,7 +60,7 @@ function Input({ type }) {
             key={`${ticket.ticket}_${index}`}
             ticket={ticket}
             setInput={setInput}
-            type={type}
+            type={'to'}
             setList={setList}
           />
         ))}
@@ -67,4 +69,6 @@ function Input({ type }) {
   )
 }
 
-export default Input
+const InputTo = React.memo(InputToInner)
+
+export default InputTo
