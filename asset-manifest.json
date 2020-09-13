@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Converter-money/static/css/main.0286fd90.chunk.css",
+    "main.css": "/Converter-money/static/css/main.2acbb11c.chunk.css",
     "main.js": "/Converter-money/static/js/main.62d2b437.chunk.js",
     "main.js.map": "/Converter-money/static/js/main.62d2b437.chunk.js.map",
     "runtime-main.js": "/Converter-money/static/js/runtime-main.db99fc70.js",
@@ -8,15 +8,15 @@
     "static/js/2.62662171.chunk.js": "/Converter-money/static/js/2.62662171.chunk.js",
     "static/js/2.62662171.chunk.js.map": "/Converter-money/static/js/2.62662171.chunk.js.map",
     "index.html": "/Converter-money/index.html",
-    "precache-manifest.5613ce2d45372582702042a1312d8910.js": "/Converter-money/precache-manifest.5613ce2d45372582702042a1312d8910.js",
+    "precache-manifest.7b090e119077659ee3f608768beb5380.js": "/Converter-money/precache-manifest.7b090e119077659ee3f608768beb5380.js",
     "service-worker.js": "/Converter-money/service-worker.js",
-    "static/css/main.0286fd90.chunk.css.map": "/Converter-money/static/css/main.0286fd90.chunk.css.map",
+    "static/css/main.2acbb11c.chunk.css.map": "/Converter-money/static/css/main.2acbb11c.chunk.css.map",
     "static/js/2.62662171.chunk.js.LICENSE.txt": "/Converter-money/static/js/2.62662171.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.db99fc70.js",
     "static/js/2.62662171.chunk.js",
-    "static/css/main.0286fd90.chunk.css",
+    "static/css/main.2acbb11c.chunk.css",
     "static/js/main.62d2b437.chunk.js"
   ]
 }
