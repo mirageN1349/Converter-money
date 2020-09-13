@@ -47,7 +47,8 @@ function InputToInner() {
         placeholder={'BNBMAINNET'}
         value={input.tickerTo}
         onChange={renderList}
-        onClick={() => {
+        onClick={e => {
+          e.target.setAttribute('disabled', true)
           setList(!list)
         }}
         type="text"
@@ -57,7 +58,7 @@ function InputToInner() {
       <div className={list ? 'converter-list' : 'converter-list none'}>
         {listMoney.map((ticket, index) => (
           <Ticket
-            key={`${ticket.ticket}_${index}`}
+            key={`${ticket.ticker}_${index}`}
             ticket={ticket}
             setInput={setInput}
             type={'to'}

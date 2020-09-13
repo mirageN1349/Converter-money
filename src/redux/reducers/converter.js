@@ -1,6 +1,8 @@
 const initialState = {
   result: 0,
   minConvert: 0,
+  error: false,
+  loading: false,
 }
 
 const converterReducer = (state = initialState, action) => {

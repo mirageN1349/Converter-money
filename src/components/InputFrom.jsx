@@ -12,10 +12,46 @@ function InputFromInner() {
     tickerFrom: '',
   })
 
-  const { listMoney, valueFrom } = useSelector(({ listMoney, converter }) => ({
+  const {
+    listMoney,
+    valueFrom,
+    minConvert,
+    result,
+    tickerTo,
+    tickerFrom,
+    error,
+  } = useSelector(({ listMoney, converter }) => ({
     listMoney: listMoney.listMoney,
     valueFrom: converter.valueFrom,
+    minConvert: converter.minConvert,
+    tickerTo: converter.tickerTo,
+    tickerFrom: converter.tickerFrom,
+    result: converter.result,
+    error: converter.error,
   }))
+
+  const errors = () => {
+    if (result === '-' && !error) {
+      return (
+        <span className="error-min">
+          {'Минимальная сумма конвертации: '}
+          <span className="error-min__value">
+            {minConvert || 'пара не активна'}
+          </span>
+        </span>
+      )
+    } else if (error && result === '-') {
+      return <span className="error-min">Выберите разные валюты</span>
+    } else if (!tickerFrom) {
+      return <span className="error-min">Выберите конвертируемую валюту</span>
+    } else if (!tickerTo) {
+      return <span className="error-min">Выберите итоговую валюту</span>
+    } else if (!valueFrom || valueFrom === '0') {
+      return <span className="error-min">Введите сумму конвертации</span>
+    } else {
+      return <span className="success">Нажмите на кнопку конвертации</span>
+    }
+  }
 
   const renderList = e => {
     e.persist()
@@ -36,26 +72,30 @@ function InputFromInner() {
     <div className="converter-block">
       <input
         name="valueFrom"
+        className="converter-input"
         onChange={renderList}
         value={valueFrom}
         placeholder="0"
         type="text"
       />
+
       <input
         placeholder={'BTC'}
         value={input.tickerFrom}
         onChange={renderList}
-        onClick={() => {
+        onClick={e => {
+          e.target.setAttribute('disabled', true)
           setList(!list)
         }}
         type="text"
         name="tickerFrom"
       />
+      {errors()}
 
       <div className={list ? 'converter-list' : 'converter-list none'}>
         {listMoney.map((ticket, index) => (
           <Ticket
-            key={`${ticket.ticket}_${index}`}
+            key={`${ticket.ticker}_${index}`}
             ticket={ticket}
             setInput={setInput}
             type={'from'}

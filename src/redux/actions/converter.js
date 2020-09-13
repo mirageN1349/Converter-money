@@ -15,6 +15,8 @@ export const setConvertResult = result => {
 }
 
 export const fetchConvertData = (from, to, sum, request) => async dispatch => {
+  dispatch(setConvertData('loading', true))
   const convert = await converter(from, to, sum, request)
-  dispatch(setConvertResult(convert.estimatedAmount))
+  dispatch(setConvertResult(convert?.estimatedAmount))
+  dispatch(setConvertData('loading', false))
 }

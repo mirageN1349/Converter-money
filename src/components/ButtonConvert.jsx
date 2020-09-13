@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchConvertData } from '../redux/actions/converter'
+import { fetchConvertData, setConvertData } from '../redux/actions/converter'
 import useHttp from '../hooks/http.hook'
 
 function ButtonConvertInner() {
-  const { request } = useHttp()
+  const { request, setPreloader } = useHttp()
   const dispatch = useDispatch()
   const { converter } = useSelector(({ converter }) => ({
     converter: converter,
@@ -12,20 +12,28 @@ function ButtonConvertInner() {
 
   const clickConvert = () => {
     if (!converter?.tickerFrom) {
-      return alert('Введите конвертируемую валюту!')
+      return
     } else if (!converter?.tickerTo) {
-      return alert('Введите итоговую  валюту!')
+      return
     } else if (!converter?.valueFrom) {
-      return alert('Введите сумму конвертации!')
+      return
     } else if (converter?.valueFrom < converter?.minConvert) {
-      return alert(`Минимальная сумма конвертации ${converter?.minConvert}`)
+      dispatch(setConvertData('result', '-'))
+      return
+    } else if (
+      converter?.tickerFrom === converter?.tickerTo ||
+      converter?.tickerTo === converter?.tickerFrom
+    ) {
+      dispatch(setConvertData('result', 'Пара не активна'))
+      return
     }
     dispatch(
       fetchConvertData(
         converter?.tickerFrom.toLowerCase(),
         converter?.tickerTo.toLowerCase(),
         converter?.valueFrom,
-        request
+        request,
+        setPreloader
       )
     )
   }
