@@ -3,9 +3,16 @@ import { useDispatch } from 'react-redux'
 import { minConvert } from '../api/serviceApi'
 import { setConvertData } from '../redux/actions/converter'
 import useHttp from '../hooks/http.hook'
-function Ticket({ ticket, setInput, type, setList }) {
+
+function TicketInner({ ticket, setInput, type, setList }) {
   const { request } = useHttp()
   const dispatch = useDispatch()
+
+  const error = () => {
+    dispatch(setConvertData('error', true))
+    dispatch(setConvertData('result', '-'))
+  }
+
   let stop = false
   const setName = async e => {
     const value = e.target.innerText
@@ -17,19 +24,15 @@ function Ticket({ ticket, setInput, type, setList }) {
     const converter = window.store.getState().converter
 
     if (converter?.tickerTo === converter?.tickerFrom) {
-      dispatch(setConvertData('error', true))
-      dispatch(setConvertData('result', '-'))
+      error()
       stop = true
     } else if (converter?.tickerFrom === converter?.tickerTo) {
-      dispatch(setConvertData('error', true))
-      dispatch(setConvertData('result', '-'))
+      error()
       stop = true
     } else {
       stop = false
       dispatch(setConvertData('result', 0))
     }
-
-    console.log('from', converter?.tickerFrom, 'to', converter?.tickerTo)
 
     setInput(prev => {
       return {
@@ -39,9 +42,7 @@ function Ticket({ ticket, setInput, type, setList }) {
     })
 
     if (converter?.tickerFrom && converter?.tickerTo) {
-      if (stop === true) {
-        return
-      }
+      if (stop === true) return
       dispatch(setConvertData('error', false))
       dispatch(setConvertData('loading', true))
       const min = await minConvert(
@@ -51,7 +52,7 @@ function Ticket({ ticket, setInput, type, setList }) {
       )
 
       dispatch(setConvertData('minConvert', min?.minAmount))
-      if (!converter?.valueFrom) {
+      if (!converter?.valueFrom || converter?.valueFrom === '0') {
         dispatch(setConvertData('valueFrom', min?.minAmount))
       }
 
@@ -65,4 +66,7 @@ function Ticket({ ticket, setInput, type, setList }) {
     </div>
   )
 }
+
+const Ticket = React.memo(TicketInner)
+
 export default Ticket

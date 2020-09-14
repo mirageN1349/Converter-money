@@ -1,11 +1,10 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setConvertData } from '../redux/actions/converter'
 import Ticket from './Ticket'
 
-function InputFromInner() {
+function InputFromInner({ propsInput }) {
   const dispatch = useDispatch()
-
   const [list, setList] = React.useState(false)
   const [input, setInput] = React.useState({
     valueFrom: '',
@@ -16,19 +15,11 @@ function InputFromInner() {
     listMoney,
     valueFrom,
     minConvert,
-    result,
     tickerTo,
     tickerFrom,
+    result,
     error,
-  } = useSelector(({ listMoney, converter }) => ({
-    listMoney: listMoney.listMoney,
-    valueFrom: converter.valueFrom,
-    minConvert: converter.minConvert,
-    tickerTo: converter.tickerTo,
-    tickerFrom: converter.tickerFrom,
-    result: converter.result,
-    error: converter.error,
-  }))
+  } = propsInput
 
   const errors = () => {
     if (result === '-' && !error) {
@@ -53,19 +44,28 @@ function InputFromInner() {
     }
   }
 
+  React.useEffect(() => {
+    if (valueFrom !== input.valueFrom) {
+      setInput({
+        ...input,
+        valueFrom: valueFrom,
+      })
+    }
+  }, [valueFrom, input])
+
   const renderList = e => {
     e.persist()
     if (e.target.name === 'tickerFrom') {
       e.target.value ? setList(true) : setList(false)
     }
-
+    const value = e.target.value.replace(/[^\d., '']/g, '').toUpperCase()
     setInput(prev => {
       return {
         ...prev,
-        [e.target.name]: e.target.value.toUpperCase(),
+        [e.target.name]: value,
       }
     })
-    dispatch(setConvertData(e.target.name, e.target.value))
+    dispatch(setConvertData(e.target.name, value))
   }
 
   return (
@@ -74,7 +74,7 @@ function InputFromInner() {
         name="valueFrom"
         className="converter-input"
         onChange={renderList}
-        value={valueFrom}
+        value={input.valueFrom}
         placeholder="0"
         type="text"
       />

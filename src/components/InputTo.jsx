@@ -1,21 +1,15 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setConvertData } from '../redux/actions/converter'
 import Ticket from './Ticket'
 
-function InputToInner() {
+function InputToInner({ result, listMoney }) {
   const dispatch = useDispatch()
-
   const [list, setList] = React.useState(false)
   const [input, setInput] = React.useState({
     valueTo: '',
     tickerTo: '',
   })
-
-  const { listMoney, result } = useSelector(({ listMoney, converter }) => ({
-    listMoney: listMoney.listMoney,
-    result: converter.result,
-  }))
 
   const renderList = e => {
     e.persist()

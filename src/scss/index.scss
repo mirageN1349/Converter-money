@@ -109,6 +109,7 @@ body {
     color: #000000;
     font-weight: bold;
     font-size: 16px;
+    text-transform: uppercase;
     cursor: pointer;
   }
   &-block-address {
@@ -164,4 +165,68 @@ body {
 .progress {
   background: #7aff77;
   height: 2px;
+}
+
+@media (max-width: 720px) {
+  body {
+    background: none;
+  }
+
+  .container {
+    height: 100vh;
+  }
+
+  .converter {
+    width: 100%;
+    padding: 10px 20px;
+    background: none;
+    height: auto;
+    &-list {
+      right: calc(50% - 85px);
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    &-blocks {
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    &-block {
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 0;
+      height: 70px;
+      border-radius: 15px;
+      input {
+        border-right: none;
+        border-bottom: 1px solid #333;
+        margin-bottom: 5px;
+        text-align: center;
+        &:nth-child(2n) {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .button-convert {
+      margin: 10px 0;
+    }
+    &-next {
+      width: 100%;
+      margin-top: 20px;
+      height: 40px;
+      border-radius: 15px;
+    }
+    &-block-address {
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+
+  .error-min {
+    bottom: 80px;
+  }
+  .success {
+    bottom: 80px;
+  }
 }

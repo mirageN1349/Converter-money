@@ -1,7 +1,9 @@
 import React from 'react'
 
-function ButtonNext() {
-  return <button className="converter-next">NEXT</button>
+function ButtonNextInner() {
+  return <button className="converter-next">next</button>
 }
+
+const ButtonNext = React.memo(ButtonNextInner)
 
 export default ButtonNext

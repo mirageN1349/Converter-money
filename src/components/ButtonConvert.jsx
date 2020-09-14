@@ -24,7 +24,8 @@ function ButtonConvertInner() {
       converter?.tickerFrom === converter?.tickerTo ||
       converter?.tickerTo === converter?.tickerFrom
     ) {
-      dispatch(setConvertData('result', 'Пара не активна'))
+      dispatch(setConvertData('result', '-'))
+      dispatch(setConvertData('error', true))
       return
     }
     dispatch(
