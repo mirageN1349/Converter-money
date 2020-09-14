@@ -9,7 +9,7 @@ import Preloader from './Preloader'
 import { useSelector } from 'react-redux'
 
 function Converter() {
-  const propsInput = useSelector(({ listMoney, converter }) => ({
+  const props = useSelector(({ listMoney, converter }) => ({
     loading: converter.loading,
     listMoney: listMoney.listMoney,
     valueFrom: converter.valueFrom,
@@ -23,9 +23,9 @@ function Converter() {
   return (
     <div className="converter">
       <div className="converter-blocks">
-        <InputFrom propsInput={propsInput} />
-        <ButtonConvert />
-        <InputTo result={propsInput.result} listMoney={propsInput.listMoney} />
+        <InputFrom propsInput={props} />
+        <ButtonConvert propsButton={props} />
+        <InputTo result={props.result} listMoney={props.listMoney} />
       </div>
 
       <div className="converter-blocks">
@@ -33,7 +33,7 @@ function Converter() {
         <ButtonNext />
       </div>
       <div className="converter-preloader">
-        {propsInput.loading ? <Preloader /> : ''}
+        {props.loading ? <Preloader /> : ''}
       </div>
     </div>
   )

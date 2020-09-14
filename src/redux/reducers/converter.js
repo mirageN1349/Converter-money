@@ -4,6 +4,9 @@ const initialState = {
   loading: false,
   minConvert: 0,
   valueFrom: '',
+  valueTo: '',
+  tickerFrom: '',
+  tickerTo: '',
 }
 
 const converterReducer = (state = initialState, action) => {

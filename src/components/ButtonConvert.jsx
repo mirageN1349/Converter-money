@@ -1,40 +1,34 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fetchConvertData, setConvertData } from '../redux/actions/converter'
 import useHttp from '../hooks/http.hook'
 
-function ButtonConvertInner() {
-  const { request, setPreloader } = useHttp()
+function ButtonConvertInner({ propsButton }) {
+  const { request } = useHttp()
   const dispatch = useDispatch()
-  const { converter } = useSelector(({ converter }) => ({
-    converter: converter,
-  }))
+  const { tickerFrom, tickerTo, valueFrom, minConvert } = propsButton
 
   const clickConvert = () => {
-    if (!converter?.tickerFrom) {
+    if (!tickerFrom) {
       return
-    } else if (!converter?.tickerTo) {
+    } else if (!tickerTo) {
       return
-    } else if (!converter?.valueFrom) {
+    } else if (!valueFrom) {
       return
-    } else if (converter?.valueFrom < converter?.minConvert) {
+    } else if (valueFrom < minConvert) {
       dispatch(setConvertData('result', '-'))
       return
-    } else if (
-      converter?.tickerFrom === converter?.tickerTo ||
-      converter?.tickerTo === converter?.tickerFrom
-    ) {
+    } else if (tickerFrom === tickerTo || tickerTo === tickerFrom) {
       dispatch(setConvertData('result', '-'))
       dispatch(setConvertData('error', true))
       return
     }
     dispatch(
       fetchConvertData(
-        converter?.tickerFrom.toLowerCase(),
-        converter?.tickerTo.toLowerCase(),
-        converter?.valueFrom,
-        request,
-        setPreloader
+        tickerFrom.toLowerCase(),
+        tickerTo.toLowerCase(),
+        valueFrom,
+        request
       )
     )
   }
